@@ -20,6 +20,6 @@ withContext(dispatcher) {
 ```groovy
 // build.gradle
 dependencies {
-    implementation 'io.github.eaglesakura.flexible-thread-pool-dispatcher:armyknife-runtime:${replace version}'
+    implementation 'io.github.eaglesakura.flexible-thread-pool-dispatcher:flexible-thread-pool-dispatcher:${replace version}'
 }
 ```
