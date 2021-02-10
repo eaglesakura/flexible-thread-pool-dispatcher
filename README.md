@@ -1,30 +1,25 @@
 # What is this repository?
 
-Library for android applications with Kotlin.
+Auto-Scale supported `CoroutineDispatcher`.
 
-armyknife is small library, but it can be more small. If you have to shrink to application, then proguard-options set to
-enable.
+# Example.
 
-# how to implementation into your project
+```kotlin
+// Max 4 thread(min 0 thread).
+// Kee-Alive 1 seconds. 
+val dispatcher =
+    FlexibleThreadPoolDispatcher.newDispatcher(4, 1, TimeUnit.SECONDS)
+
+withContext(dispatcher) {
+    // do something.
+}
+```
+
+# How to Install
 
 ```groovy
 // build.gradle
 dependencies {
-    implementation 'io.github.eaglesakura.armyknife-runtime:armyknife-runtime:${replace version}'
+    implementation 'io.github.eaglesakura.flexible-thread-pool-dispatcher:armyknife-runtime:${replace version}'
 }
-```
-
-## Dev / LocalInstall
-
-```sh
-./gradlew -Pinstall_snapshot build uploadArchives
-```
-
-```groovy
-repositories {
-    mavenLocal()
-}
-
-// replace version("major.minor.99999")
-implementation 'io.github.eaglesakura.armyknife-runtime:armyknife-runtime:${replace version}'
 ```

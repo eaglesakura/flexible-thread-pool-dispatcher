@@ -1,7 +1,5 @@
-package com.eaglesakura.armyknife.runtime.coroutines
+package io.github.eaglesakura.flexible_thread_pool_dispatcher
 
-import java.util.concurrent.LinkedBlockingDeque
-import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.asCoroutineDispatcher
@@ -17,9 +15,9 @@ import kotlinx.coroutines.asCoroutineDispatcher
  * val dispatcher = FlexibleThreadPoolDispatcher.newDispatcher(4, 1, TimeUnit.SECONDS)  // 4thread, 1seconds auto-scale dispatcher.
  *
  * @author @eaglesakura
- * @link https://github.com/eaglesakura/armyknife-runtime
+ * @link https://github.com/eaglesakura/flexible-thread-pool-dispatcher
  */
-@Deprecated("split to 'io.github.eaglesakura.kotlin-utils'")
+@Suppress("MemberVisibilityCanBePrivate")
 object FlexibleThreadPoolDispatcher {
 
     /**
@@ -40,6 +38,7 @@ object FlexibleThreadPoolDispatcher {
     /**
      * for Device input/output dispatcher.
      */
+    @Deprecated("compat, will remove this property.")
     val IO: CoroutineDispatcher by lazy {
         newDispatcher(
             Runtime.getRuntime().availableProcessors() * 2 + 1,
@@ -51,26 +50,12 @@ object FlexibleThreadPoolDispatcher {
     /**
      * for Network fetch dispatcher.
      */
+    @Deprecated("compat, will remove this property.")
     val Network: CoroutineDispatcher by lazy {
         newDispatcher(
             Runtime.getRuntime().availableProcessors() * 2 + 1,
             5,
             TimeUnit.SECONDS
         )
-    }
-}
-
-private class FlexibleThreadPoolExecutor(
-    maxThreads: Int,
-    keepAliveTime: Long,
-    keepAliveTimeUnit: TimeUnit
-) : ThreadPoolExecutor(0, maxThreads, keepAliveTime, keepAliveTimeUnit, LinkedBlockingDeque()) {
-    override fun execute(command: Runnable?) {
-        try {
-            corePoolSize = maximumPoolSize
-            super.execute(command)
-        } finally {
-            corePoolSize = 0
-        }
     }
 }
